@@ -1,0 +1,44 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Matcher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Student Internship Matcher</h2>
+        
+        <div class="card shadow-sm p-4 mb-5">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Student Name</label>
+                    <input type="text" name="name" class="form-control" required placeholder="John Doe">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Your Skills (Comma separated)</label>
+                    <input type="text" name="skills" class="form-control" required placeholder="python, flask, sql, linux">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Find Matches</button>
+            </form>
+        </div>
+
+        {% if matches %}
+            <h4>Your Top Matches:</h4>
+            <div class="list-group">
+                {% for match in matches %}
+                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">{{ match.company }} - {{ match.role }}</h5>
+                            <small class="text-muted">Requires: {{ match.required_skills | join(', ') }}</small>
+                        </div>
+                        <span class="badge bg-success rounded-pill">{{ match.match_score }}% Match</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
